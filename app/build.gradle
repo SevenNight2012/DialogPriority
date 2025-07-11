@@ -1,0 +1,81 @@
+plugins {
+    alias(libs.plugins.android.application)
+
+    id("com.didichuxing.tools.droidassist")
+}
+
+// 滴滴字节码插件配置
+droidAssistOptions {
+    // boolean isRelease = rootProject.ext.isRelease
+    // println "Release build mode >> $isRelease"
+    // 只在release模式下进行hook，防止debug开发阶段添加太多的编译期任务导致编译时间激增，影响开发效率
+    enable true
+    logLevel 3
+    // 插件配置文件(必选配置,支持多配置文件)
+    config file("dialog_show_hook.xml")
+}
+
+android {
+    namespace 'com.xxc.my.dialog.hook'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.xxc.my.dialog.hook"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation libs.freeReflect
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.constraintlayout
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+
+    // 强制使用统一的Kotlin版本
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7") {
+            version {
+                strictly("1.6.21")
+            }
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8") {
+            version {
+                strictly("1.6.21")
+            }
+        }
+    }
+}
+
+// 解决依赖冲突
+configurations.all {
+    resolutionStrategy {
+        force 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21'
+        force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21'
+    }
+}

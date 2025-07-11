@@ -1,0 +1,21 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    dependencies {
+        // 滴滴开源的字节码插件
+        classpath libs.didi.droidassist
+    }
+}
+plugins {
+    alias(libs.plugins.android.application) apply false
+}
+
+// 全局依赖冲突解决
+allprojects {
+    configurations.all {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21'
+        }
+    }
+}
