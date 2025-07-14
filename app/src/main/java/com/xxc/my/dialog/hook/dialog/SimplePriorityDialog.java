@@ -1,5 +1,6 @@
 package com.xxc.my.dialog.hook.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.xxc.my.dialog.hook.R;
+import com.xxc.my.dialog.hook.utils.ActivityUtils;
 import com.xxc.my.dialog.hook.utils.DialogUtils;
 
 import java.util.Random;
@@ -79,6 +81,10 @@ public class SimplePriorityDialog extends Dialog implements DialogPriority {
                     dialog = simple;
                 }
                 dialog.show();
+                Activity activity = ActivityUtils.getActivityByContext(getContext());
+                if (activity != null && priorityValue >= 10) {
+                    activity.finish();
+                }
             }
         });
 

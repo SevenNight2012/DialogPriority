@@ -3,6 +3,7 @@ package android.app;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ class ListenersHandler extends Handler {
     private final WeakReference<Dialog> mDialog;
 
     ListenersHandler(Dialog dialog) {
+        super(Looper.getMainLooper());
         mDialog = new WeakReference<>(dialog);
         if (dialog != null) {
             Context ctx = dialog.getContext();
