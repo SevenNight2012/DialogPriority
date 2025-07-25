@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 import com.xxc.my.dialog.hook.dialog.DialogManager;
 import com.xxc.my.dialog.hook.utils.ActivityUtils;
+import com.xxc.my.dialog.hook.utils.DialogUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -33,6 +34,10 @@ class ListenersHandler extends Handler {
                 owner.getLifecycle().addObserver(new DefaultLifecycleObserver() {
                     @Override
                     public void onDestroy(@NonNull LifecycleOwner owner) {
+                        if (mDialog.get() != null) {
+                            // 在destroy的时候主动关闭弹窗，否则会报错 WindowLeaked：Activity xxx has leaked window DecorView@680da73[MainActivity] that was originally added here
+                            DialogUtils.dismiss(mDialog.get());
+                        }
                         removeCallbacksAndMessages(null);
                     }
                 });

@@ -1,7 +1,9 @@
 package com.xxc.my.dialog.hook.dialog;
 
 import android.app.Dialog;
+import android.app.DialogShadow;
 import android.os.MessageQueue;
+import android.util.Log;
 
 import com.xxc.my.dialog.hook.utils.DialogUtils;
 import com.xxc.my.dialog.hook.utils.ListUtils;
@@ -77,6 +79,7 @@ public class DialogManager implements MessageQueue.IdleHandler {
                 }
             }
             Dialog dialog = null != mShowingDialog ? mShowingDialog.get() : null;
+            Log.d(DialogShadow.TAG, "queueIdle: " + dialog);
             DialogUtils.show(dialog);
         }
         // 保持在队列中

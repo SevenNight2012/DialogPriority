@@ -16,7 +16,7 @@ public class DialogShadow {
     public static final String TAG = "DialogShadow";
 
     public static void tryShowPriority(Dialog dialog) {
-        Log.d(TAG, "tryShowPriority: " + dialog);
+        // Log.d(TAG, "tryShowPriority: " + dialog);
         if (dialog instanceof DialogPriority && tryResetDismissListener(dialog)) {
             DialogPriority dialogPriority = (DialogPriority) dialog;
             int priority = dialogPriority.getPriority();
